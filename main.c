@@ -2,6 +2,7 @@
 #include <math.h>
 #include "rayHeader.h"
 //#include "rayFunctions.c"
+// Created by
 //TODO: INPUT FURTHER INFORMATION FOR EACH FUNCTION IN THE COMMENT STRUCTURE
 
 /*------------PROJECT INFORMATION------------*/
@@ -25,13 +26,18 @@ Surface surf[] = {{0.0, 45, 1.0}, // Represent sphere surfaces as arrays
 
 /*----Function: tracing a ray through an optical system----*/
 /*
-    1. 
-    2. 
-    3. 
-
+    1. Declare and initialize necessary variables and pointers
+        *
+        * 
+        * 
+        * 
+        * 
+    2. //TODO: ADD INFORMATION
 
 */
 int raytrace(RAY *start, RAY data[]){
+
+// 1. 
     int k, image, iret;
     RAY *in, *out;
     Surface *sp;
@@ -40,6 +46,8 @@ int raytrace(RAY *start, RAY data[]){
     in = start;
     out = data+1;
     image = nsurf-1;
+
+// 2. 
     for (k=1; k<=image; k++) {
         iret = trace(in, out, sp++);
         if (iret<0) return iret;
@@ -52,8 +60,8 @@ int raytrace(RAY *start, RAY data[]){
 /*  1. Declare necessary variables, pointers, etc.
         *
     2. Transfer to the current surface's coordinates
-        * in->start is axial distance to the present surface upon INPUT
-        * in->start is the oblique distance to the present surface upon OUTPUT
+        * in->start is axial distance to the present surface upon --INPUT--
+        * in->start is the oblique distance to the present surface upon --OUTPUT--
     3. Intersect the present surface
         *
     4. Calculate the point of intersection
@@ -64,7 +72,9 @@ int raytrace(RAY *start, RAY data[]){
         *
 
 */
+
 int trace(RAY *in, RAY *out, Surface *surf){
+
 // 1.     
     int i;
     double rni, rno, curv_Vec, start;

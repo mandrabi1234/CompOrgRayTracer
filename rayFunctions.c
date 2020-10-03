@@ -6,7 +6,7 @@
 /*---------Ray Tracer Functions File---------*/
 
 
-int nsurf = 5;
+int surfCount = 5;
 // (curvature, axial thickness, refraction)
 Surface surf[] = {{0.0, 45, 1.0, 30, 90, 90}, // Represent sphere surfaces as arrays
                   {0.03,9.0,1.67, 20, 90, 30},
@@ -26,22 +26,22 @@ Surface surf[] = {{0.0, 45, 1.0, 30, 90, 90}, // Represent sphere surfaces as ar
     2. //TODO: ADD INFORMATION
 
 */
-int raytrace(RAY *start, RAY data[]){
+int rayTrace(RAY *start, RAY data[]){
 
 // 1. 
-    int k, image, iret;
+    int i, image, inView;
     RAY *in, *out;
     Surface *sp;
     sp = surf+1;
     start->distanceToPoint = 0.0;
     in = start;
     out = data+1;
-    image = nsurf-1;
+    image = surfCount-1;
 
 // 2. 
-    for (k=1; k<=image; k++) {
-        iret = trace(in, out, sp++);
-        if (iret<0) return iret;
+    for (i=1; i<=image; i++) {
+        inView = trace(in, out, sp++);
+        if (inView<0) return inView;
         in = out++;
     }
     return 0;
@@ -144,7 +144,7 @@ int trace(RAY *in, RAY *out, Surface *surf){
         * If... output information regarding the total internal reflection
 
 */
-int print_ray(RAY *ray)
+int print_Ray(RAY *ray)
 {
 // 1. Surface Missed Output
     if (ray->error==-1) {
@@ -155,17 +155,17 @@ int print_ray(RAY *ray)
 
 // 2. Surface Interaction Output    
     printf("Surface Intersection: ");
-    print_vector(ray->start);
+    print_Vector(ray->start);
 
 // 3. ODC Output
     if (ray->error==0) {
         printf("Optical Direction Cosines: ");
-        print_vector(ray->rayDirection);
+        print_Vector(ray->rayDirection);
     }
 
 // 4. Surf Norm Output
     printf("Surface Normalized: ");
-    print_vector(ray->norm_surf);
+    print_Vector(ray->norm_surf);
 
 // 5. Distance Output
     printf("Distance: %12.6f G_COSI %12.6f G_COSR %12.6f\n",
@@ -180,7 +180,7 @@ int print_ray(RAY *ray)
 }
 
 /*----Function: printing vector data based on input----*/
-void print_vector(double v[3])
+void print_Vector(double v[3])
 {
     printf("%12.6f %12.6f %12.6f\n",v[0],v[1],v[2]);
 }

@@ -38,12 +38,12 @@ int main()
     for (i=0; i<3; i++) end_point->rayDirection[i] = obj->rayDirection[i];
     end_point->refractionIndex = surf->refractionIndex;
     printf("object point: ");
-    print_vector(obj->start);
-    raytrace(end_point,ray);
+    print_Vector(obj->start);
+    rayTrace(end_point,ray);
     i =1;
-    while (i<nsurf) {
+    while (i<surfCount) {
         printf("\nSurface %d\n",i);
-        inView = print_ray(ray+i);
+        inView = print_Ray(ray+i);
         printf("Predefined Surface Color: R:%12.6f G:%12.6f B:%12.6f\n", surf[i].r, surf[i].g, surf[i].b);
 
         i++;

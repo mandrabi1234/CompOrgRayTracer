@@ -26,10 +26,10 @@ typedef struct {
 
 
 //TODO: PUT INFORMATION ABOUT THESE IN HERE
-int raytrace(RAY *start, RAY data[]);
+int rayTrace(RAY *start, RAY data[]);
 int trace(RAY *in, RAY *out, Surface *surf);
-int print_ray(RAY *ray);
-void print_vector(double v[3]);
+int print_Ray(RAY *ray);
+void print_Vector(double v[3]);
 double dotProduct(double a[3], double b[3]);
 void vectorNormalize(double v[3], double norm);
 

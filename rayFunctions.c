@@ -101,7 +101,7 @@ int trace(RAY *in, RAY *out, Surface *surf){
     for (i=0; i<3; i++) out->norm_surf[i] = -curv_Vec*out->start[i];
     out->norm_surf[2] += 1.0;
 
-// 6. Refract the ray into the surface
+// 6. Refract the ray from the surface
     out->norm_cosi = dotProduct(in->rayDirection,out->norm_surf);
     root = out->norm_cosi*out->norm_cosi + (rNot+rNiether)*(rNot - rNiether);
     if (root<0.0) {

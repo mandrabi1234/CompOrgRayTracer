@@ -157,9 +157,7 @@ int print_Ray(RAY *ray)
     print_Vector(ray->norm_surf);
 
 // 5. Distance Output
-    printf("Distance: %12.6f G_COSI %12.6f G_COSR %12.6f\n",
-           ray->distanceToPoint,ray->norm_cosi,ray->refrac_cosr);
-
+    printf("Distance: %12.6f NORM_COSI %12.6f REFRAC_COSR %12.6f\n", ray->distanceToPoint,ray->norm_cosi,ray->refrac_cosr);
 // 6. TIR Output    
     if (ray->error==-2) {
         printf("TOTAL INTERNAL REFLECTION\n");

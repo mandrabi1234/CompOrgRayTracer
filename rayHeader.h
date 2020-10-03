@@ -19,14 +19,10 @@ typedef struct {
     double curvature;
     double axialThickness;
     double refractionIndex;
+    float r;
+    float g;
+    float b;
 } Surface;
-
-// RGB color schema
-typedef struct Color{
-    float r; // red
-    float g; // green
-    float b; // blue
-} Color;
 
 
 //TODO: PUT INFORMATION ABOUT THESE IN HERE

@@ -68,11 +68,11 @@ int trace(RAY *in, RAY *out, Surface *surf){
 
 // 1.     
     int i;
-    double rni, rno, curv_Vec, start;
+    double rNiether, rNot, curv_Vec, start;
     double A,B,C,D;
-    double root, power;
-    rni = in->refractionIndex;
-    rno = surf->refractionIndex;
+    double root, refractionStrength;
+    rNiether = in->refractionIndex;
+    rNot = surf->refractionIndex;
     curv_Vec = surf->curvature;
 
 // 2. 
@@ -82,7 +82,7 @@ int trace(RAY *in, RAY *out, Surface *surf){
 
 // 3. 
     if (curv_Vec) {
-        A = curv_Vec*rni*rni;
+        A = curv_Vec*rNiether*rNiether;
         B = in->rayDirection[2]-curv_Vec*dotProduct(in->rayDirection,out->start);
         C = curv_Vec*dotProduct(out->start,out->start)-2.0*out->start[2];
         D = B*B-A*C;
@@ -109,21 +109,21 @@ int trace(RAY *in, RAY *out, Surface *surf){
     for (i=0; i<3; i++) out->start[i] += start * in->rayDirection[i]; 
 
 // 5. 
-    for (i=0; i<3; i++) out->norm[i] = -curv_Vec*out->start[i]; 
-    out->norm[2] += 1.0;
+    for (i=0; i<3; i++) out->norm_surf[i] = -curv_Vec*out->start[i];
+    out->norm_surf[2] += 1.0;
 
 // 6. 
-    out->gcosi = dotProduct(in->rayDirection,out->norm);
-    root = out->gcosi*out->gcosi + (rno+rni)*(rno - rni);
+    out->norm_cosi = dotProduct(in->rayDirection,out->norm_surf);
+    root = out->norm_cosi*out->norm_cosi + (rNot+rNiether)*(rNot - rNiether);
     if (root<0.0) {
         out->error = -2;
         return out->error;
     }
     root = sqrt(root);
-    out->gcosr = (out->gcosi>0.0? root: -root);
-    power = out->gcosr - out->gcosi;
-    for (i=0; i<3; i++) out->rayDirection[i] = in->rayDirection[i] + power*out->norm[i];
-    out->refractionIndex = rno;
+    out->refrac_cosr = (out->norm_cosi>0.0? root: -root);
+    refractionStrength = out->refrac_cosr - out->norm_cosi;
+    for (i=0; i<3; i++) out->rayDirection[i] = in->rayDirection[i] + refractionStrength*out->norm_surf[i];
+    out->refractionIndex = rNot;
     out->error = 0;
     return out->error;
 }
@@ -148,7 +148,8 @@ int print_ray(RAY *ray)
 {
 // 1. Surface Missed Output
     if (ray->error==-1) {
-        printf("Surface Not Hit\n");
+        printf("Ray Did Not Hit\n");
+       // printf("No Color");
         return ray->error;
     }
 
@@ -164,11 +165,11 @@ int print_ray(RAY *ray)
 
 // 4. Surf Norm Output
     printf("Surface Normalized: ");
-    print_vector(ray->norm);
+    print_vector(ray->norm_surf);
 
 // 5. Distance Output
     printf("Distance: %12.6f G_COSI %12.6f G_COSR %12.6f\n",
-           ray->distanceToPoint,ray->gcosi,ray->gcosr);
+           ray->distanceToPoint,ray->norm_cosi,ray->refrac_cosr);
 
 // 6. TIR Output    
     if (ray->error==-2) {
@@ -216,6 +217,7 @@ void vectorNormalize(double vector[3], double normalize)
         * enp ()
         * *obj (object pointer)
     2. Define the object point
+          //Why we can define surfaces as numerical values of 3d space
         * //TODO: SAY WHAT THIS DOES... ADDITIONAL CONTEXT
     3. Define the entrance pupil aim point
         *

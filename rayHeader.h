@@ -9,9 +9,9 @@ typedef struct {
     double rayDirection[3];     //direction of ray propagation and spread
     double refractionIndex;       //refraction index (i.e. how shiny something is and how much it will scatter light)
     double distanceToPoint;       //distance from camera to point information
-    double gcosi;    //normalize dot product of k
-    double gcosr;   //refracted dot product of k
-    double norm[3]; //surface normalized
+    double norm_cosi;    //normalize dot product of k
+    double refrac_cosr;   //refracted dot product of k
+    double norm_surf[3]; //surface normalized
     int error;  //error
 } RAY;
 

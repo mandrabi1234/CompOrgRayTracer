@@ -2,16 +2,27 @@
 #include <math.h>
 #include "rayHeader.h"
 #include "rayFunctions.c"
-// Created by
-//TODO: INPUT FURTHER INFORMATION FOR EACH FUNCTION IN THE COMMENT STRUCTURE
 
 /*------------PROJECT INFORMATION------------*/
 /*
     Authors: Mohi Andrabi, Dan Scal, Jack Stark
-    Course Info: Comp 249(?), Professor Thomas Yeh
+    Course Info: Computer Organization, Professor Thomas Yeh, Fall 2020
     Title: Software Ray Tracer in C
-    Description: //TODO: Add a detailed description of what the ray tracer does
+*/
 
+
+/*----Main Method Execution Flow----*/
+/*
+    1. Define necessary variables, pointers, etc.
+        * ray ()
+        * enp ()
+        * *obj (object pointer)
+    2. Define the object point
+        *
+    3. Define the entrance pupil aim point
+        *
+    4. Calculate the ray's optical direction cosines
+        *
 */
 
 int main()

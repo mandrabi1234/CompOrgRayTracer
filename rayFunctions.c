@@ -7,7 +7,7 @@
 
 
 int surfCount = 5;
-// (curvature, axial thickness, refraction)
+// (curvature, axial thickness, refraction, ..., ..., ...)
 Surface surf[] = {{0.0, 45, 1.0, 30, 90, 90}, // Represent sphere surfaces as arrays
                   {0.03,9.0,1.67, 20, 90, 30},
                   {-0.05,4.5,1.728, 233, 121, 233},
@@ -16,19 +16,10 @@ Surface surf[] = {{0.0, 45, 1.0, 30, 90, 90}, // Represent sphere surfaces as ar
 
 
 /*----Function: tracing a ray through an optical system----*/
-/*
-    1. Declare and initialize necessary variables and pointers
-        *
-        * 
-        * 
-        * 
-        * 
-    2. //TODO: ADD INFORMATION
 
-*/
 int rayTrace(RAY *start, RAY data[]){
 
-// 1. 
+//  Declare and initialize necessary variables and pointers 
     int i, image, inView;
     RAY *in, *out;
     Surface *sp;
@@ -37,8 +28,7 @@ int rayTrace(RAY *start, RAY data[]){
     in = start;
     out = data+1;
     image = surfCount-1;
-
-// 2. 
+ 
     for (i=1; i<=image; i++) {
         inView = trace(in, out, sp++);
         if (inView<0) return inView;
@@ -61,12 +51,11 @@ int rayTrace(RAY *start, RAY data[]){
         *
     6. Refract the ray into the surface
         *
-
 */
 
 int trace(RAY *in, RAY *out, Surface *surf){
 
-// 1.     
+// 1. Declare necessary variables, pointers, etc.  
     int i;
     double rNiether, rNot, curv_Vec, start;
     double A,B,C,D;
@@ -75,12 +64,12 @@ int trace(RAY *in, RAY *out, Surface *surf){
     rNot = surf->refractionIndex;
     curv_Vec = surf->curvature;
 
-// 2. 
+// 2. Transfer to the current surface's coordinates
     out->start[0] = in->start[0];
     out->start[1] = in->start[1];
     out->start[2] = in->start[2] - in->distanceToPoint;
 
-// 3. 
+// 3. Intersect the present surface
     if (curv_Vec) {
         A = curv_Vec*rNiether*rNiether;
         B = in->rayDirection[2]-curv_Vec*dotProduct(in->rayDirection,out->start);
@@ -105,14 +94,14 @@ int trace(RAY *in, RAY *out, Surface *surf){
     in->distanceToPoint = start;
     out->distanceToPoint = surf->axialThickness;
 
-// 4. 
+// 4. Calculate the point of intersection
     for (i=0; i<3; i++) out->start[i] += start * in->rayDirection[i]; 
 
-// 5. 
+// 5. Calculate the surface normalized
     for (i=0; i<3; i++) out->norm_surf[i] = -curv_Vec*out->start[i];
     out->norm_surf[2] += 1.0;
 
-// 6. 
+// 6. Refract the ray into the surface
     out->norm_cosi = dotProduct(in->rayDirection,out->norm_surf);
     root = out->norm_cosi*out->norm_cosi + (rNot+rNiether)*(rNot - rNiether);
     if (root<0.0) {
@@ -194,33 +183,17 @@ double dotProduct(double a[3], double b[3])
 
 
 /*----Function: normalizing vector length to a given input value----*/
-/*
-    1. Declare necessary variables, pointers, etc.
-    2. 
-    3. 
 
-*/
 void vectorNormalize(double vector[3], double normalize)
 {
     int i;
     double vector_normalized;
+
     vector_normalized = vector[0]*vector[0]+vector[1]*vector[1]+vector[2]*vector[2];
+    
     if (vector_normalized==0.0) return;
+    
     vector_normalized = normalize/sqrt(vector_normalized);
+    
     for (i=0; i<3; i++) vector[i] *= vector_normalized;
 }
-
-/*----Main Method Execution Flow----*/
-/*
-    1. Define necessary variables, pointers, etc.
-        * ray ()
-        * enp ()
-        * *obj (object pointer)
-    2. Define the object point
-          //Why we can define surfaces as numerical values of 3d space
-        * //TODO: SAY WHAT THIS DOES... ADDITIONAL CONTEXT
-    3. Define the entrance pupil aim point
-        *
-    4. Calculate the ray's optical direction cosines
-        *
-*/

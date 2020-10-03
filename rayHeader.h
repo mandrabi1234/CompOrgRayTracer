@@ -1,6 +1,5 @@
 //
 // Created by Jack on 9/30/2020.
-// TODO: FURTHER INFORMATION FOR EACH OF THE TYPEDEFS
 
 #ifndef RAY_TRACER_ATTEMPT_3_RAYHEADER_H
 #define RAY_TRACER_ATTEMPT_3_RAYHEADER_H
@@ -24,8 +23,6 @@ typedef struct {
     float b;
 } Surface;
 
-
-//TODO: PUT INFORMATION ABOUT THESE IN HERE
 int rayTrace(RAY *start, RAY data[]);
 int trace(RAY *in, RAY *out, Surface *surf);
 int print_Ray(RAY *ray);

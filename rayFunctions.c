@@ -49,7 +49,7 @@ int rayTrace(RAY *start, RAY data[]){
         *
     5. Calculate the surface normalized
         *
-    6. Refract the ray into the surface
+    6. Refract the ray from the surface
         *
 */
 
